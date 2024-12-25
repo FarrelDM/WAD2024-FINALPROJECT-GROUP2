@@ -20,5 +20,10 @@ class Task extends Model
     {
         return $this->belongsTo(Project::class);
     }
-}
 
+    // Relationship with roles
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_task');
+    }
+}

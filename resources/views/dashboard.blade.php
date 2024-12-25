@@ -15,7 +15,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('projects.create') }}">New Project</a></li> <!-- Link to New Project -->
+                    <li class="nav-item"><a class="nav-link" href="{{ route('projects.create') }}">New Project</a></li>
                     <li class="nav-item"><a class="nav-link" href="/calendar">Calendar</a></li>
                     <li class="nav-item"><a class="nav-link" href="/roles">Roles</a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
@@ -49,8 +49,20 @@
                             @if($project->tasks->isNotEmpty())
                                 <ul class="list-group mt-3">
                                     @foreach($project->tasks as $task)
-                                        <li class="list-group-item">
-                                            <strong>{{ $task->task_name }}</strong> - {{ $task->status }}  <!-- Change title to task_name -->
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <strong>{{ $task->task_name }}</strong> - {{ $task->status }}
+
+                                            <!-- Task Details Button -->
+                                            <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-sm btn-info">
+                                                Task Details
+                                            </a>
+
+                                            <!-- Delete Task Button -->
+                                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                            </form>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -59,7 +71,7 @@
                             @endif
 
                             <!-- Edit Project Button -->
-                            <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-primary mt-3">Edit Project</a>
+                            <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-primary mt-3">+</a>
 
                             <!-- Delete Project Button -->
                             <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display:inline;">

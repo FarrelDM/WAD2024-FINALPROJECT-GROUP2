@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TaskController;
 
 Route::get('/', [App\Http\Controllers\UserController::class, 'showLoginPage'])->name('login');
 Route::post('/login', [App\Http\Controllers\UserController::class, 'login']);
@@ -19,6 +20,7 @@ Route::get('/chat', [ChatController::class, 'index'])->middleware('auth');
 Route::post('/chat/send', [ChatController::class, 'sendMessage'])->middleware('auth');
 Route::post('/chat/{id}/update', [ChatController::class, 'updateMessage'])->middleware('auth');
 Route::delete('/chat/{id}/delete', [ChatController::class, 'deleteChat'])->middleware('auth');
+
 
 Route::middleware('auth')->group(function () {
     // List Roles (GET)
@@ -105,3 +107,29 @@ Route::middleware('auth')->group(function () {
     Route::delete('/projects/{id}', [App\Http\Controllers\ProjectController::class, 'destroy'])->name('projects.destroy')->middleware('auth');
 
 });
+
+
+// Task Routes
+Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
+Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
+Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+
+// Route for Task Details Page
+Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+// Route to show task details
+Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show');
+
+// Route to update task details
+Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
+
+// Route to assign roles to a task
+Route::post('/tasks/{task}/assign-roles', [TaskController::class, 'assignRoles'])->name('tasks.assign_roles');
+
+// Route to delete a task
+Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+
+
+

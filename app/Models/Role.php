@@ -13,4 +13,10 @@ class Role extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    // Define many-to-many relationship with Task
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class, 'role_task');
+    }
 }
