@@ -15,7 +15,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/new-project">New Project</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('projects.create') }}">New Project</a></li> <!-- Link to New Project -->
                     <li class="nav-item"><a class="nav-link" href="/calendar">Calendar</a></li>
                     <li class="nav-item"><a class="nav-link" href="/roles">Roles</a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
@@ -23,33 +23,57 @@
             </div>
         </div>
     </header>
+
     <main class="container py-5">
         <h1 class="h3 mb-4">Dashboard</h1>
-        <div class="mb-4">
-            <h2 class="h5">Task Progress</h2>
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%</div>
-            </div>
-        </div>
+
         <div class="row g-3">
-            <div class="col-md-4">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Fix the system</h5>
-                        <p class="card-text">Due Date: 28/12/24</p>
+            @foreach($projects as $project)
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $project->title }}</h5>
+                            <p class="card-text">Due Date: {{ $project->end_date->format('d/m/Y') }}</p>
+
+                            <!-- Task Progress -->
+                            <div class="progress">
+                                @php
+                                    $totalTasks = $project->tasks->count();
+                                    $completedTasks = $project->tasks->where('status', 'completed')->count();
+                                    $progress = $totalTasks ? ($completedTasks / $totalTasks) * 100 : 0;
+                                @endphp
+                                <div class="progress-bar" role="progressbar" style="width: {{ $progress }}%;" aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">{{ round($progress) }}%</div>
+                            </div>
+
+                            <!-- List the tasks associated with the project -->
+                            @if($project->tasks->isNotEmpty())
+                                <ul class="list-group mt-3">
+                                    @foreach($project->tasks as $task)
+                                        <li class="list-group-item">
+                                            <strong>{{ $task->task_name }}</strong> - {{ $task->status }}  <!-- Change title to task_name -->
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <p class="text-muted mt-3">No tasks assigned</p>
+                            @endif
+
+                            <!-- Edit Project Button -->
+                            <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-primary mt-3">Edit Project</a>
+
+                            <!-- Delete Project Button -->
+                            <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger mt-3">Delete Project</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">Fix the system</h5>
-                        <p class="card-text">Due Date: 28/12/24</p>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </main>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
