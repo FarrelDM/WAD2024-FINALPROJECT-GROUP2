@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\NotificationController;
 
 Route::get('/', [App\Http\Controllers\UserController::class, 'showLoginPage'])->name('login');
 Route::post('/login', [App\Http\Controllers\UserController::class, 'login']);
@@ -132,4 +133,16 @@ Route::post('/tasks/{task}/assign-roles', [TaskController::class, 'assignRoles']
 Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 
 
+//Notification
+
+//ORIGINAL
+
+//Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+//Route::get('/notifications/create', [NotificationController::class, 'create'])->name('notifications.create');
+//Route::post('/notifications', [NotificationController::class, 'store'])->name('notifications.store');
+//Route::get('/notifications/{notification}/edit', [NotificationController::class, 'edit'])->name('notifications.edit');
+//Route::put('/notifications/{notification}', [NotificationController::class, 'update'])->name('notifications.update');
+
+//NEW
+Route::resource('notifications', NotificationController::class);
 
