@@ -27,23 +27,22 @@
     <main class="container py-5">
         <h1 class="h3 mb-4">Dashboard</h1>
 
+        <!-- Notifications Section -->
+        <div class="mb-5">
+            <h3>Notifications</h3>
+            <div id="notificationsSection" class="border p-3 bg-white rounded shadow-sm">
+                <p class="text-muted">Loading notifications...</p>
+            </div>
+            <a href="{{ route('notifications.create') }}" class="btn btn-success mt-3">Add Notification</a>
+        </div>
+
         <div class="row g-3">
             @foreach($projects as $project)
                 <div class="col-md-4">
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">{{ $project->title }}</h5>
-                            <p class="card-text">Due Date: {{ $project->end_date->format('d/m/Y') }}</p>
-
-                            <!-- Task Progress -->
-                            <div class="progress">
-                                @php
-                                    $totalTasks = $project->tasks->count();
-                                    $completedTasks = $project->tasks->where('status', 'completed')->count();
-                                    $progress = $totalTasks ? ($completedTasks / $totalTasks) * 100 : 0;
-                                @endphp
-                                <div class="progress-bar" role="progressbar" style="width: {{ $progress }}%;" aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">{{ round($progress) }}%</div>
-                            </div>
+                            <p class="card-text">Due Date: {{ $project->end_date->format('d/m/Y') }}</p>                           
 
                             <!-- List the tasks associated with the project -->
                             @if($project->tasks->isNotEmpty())
@@ -87,5 +86,37 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const notificationsSection = document.getElementById('notificationsSection');
+
+            fetch('/notifications')
+                .then(response => response.json())
+                .then(data => {
+                    notificationsSection.innerHTML = ''; // Clear the loading message
+
+                    if (data.length > 0) {
+                        data.forEach(notification => {
+                            const item = document.createElement('div');
+                            item.classList.add('card', 'mb-3');
+                            item.innerHTML = `
+                                <div class="card-body">
+                                    <h5 class="card-title">${notification.title}</h5>
+                                    <p class="card-text">${notification.message}</p>
+                                    <a href="/notifications/${notification.id}/edit" class="btn btn-primary btn-sm">Edit</a>
+                                </div>
+                            `;
+                            notificationsSection.appendChild(item);
+                        });
+                    } else {
+                        notificationsSection.innerHTML = '<p class="text-muted">No notifications available.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading notifications:', error);
+                    notificationsSection.innerHTML = '<p class="text-danger">Failed to load notifications.</p>';
+                });
+        });
+    </script>
 </body>
 </html>
