@@ -18,6 +18,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('projects.create') }}">New Project</a></li>
                     <li class="nav-item"><a class="nav-link" href="/calendar">Calendar</a></li>
                     <li class="nav-item"><a class="nav-link" href="/roles">Roles</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/chat">Chat</a></li> <!-- New Chat Button -->
                     <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
                 </ul>
             </div>
