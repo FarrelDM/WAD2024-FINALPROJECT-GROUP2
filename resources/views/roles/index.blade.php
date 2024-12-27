@@ -7,6 +7,24 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
+    <!-- Header with Dashboard Link -->
+    <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="{{ route('dashboard') }}">HJ Barakah</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ route('projects.create') }}">New Project</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/calendar">Calendar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/roles">Roles</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
     <div class="container mt-5">
         <h1>Roles and Assigned Users</h1>
 
@@ -57,6 +75,9 @@
 
         <!-- Button to create a new role -->
         <a href="{{ route('roles.create') }}" class="btn btn-primary">Create New Role</a>
+
+        <!-- Button to go back to Dashboard -->
+        <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-3">Back to Dashboard</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
