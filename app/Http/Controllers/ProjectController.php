@@ -58,10 +58,10 @@ class ProjectController extends Controller
             Task::create([
                 'task_name' => $task,
                 'project_id' => $project->id,
-                'task_details' => $task, // You can modify this if needed
-            ]);
-        }
-
+                'task_details' => 'No details provided', // Default value
+        ]);
+    }
+        
         // Attach members to the project
         if ($request->members) {
             $members = User::whereIn('email', $request->members)->pluck('id');
