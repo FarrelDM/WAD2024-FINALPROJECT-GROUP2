@@ -146,3 +146,6 @@ Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.
 //NEW
 Route::resource('notifications', NotificationController::class);
 
+Route::post('/projects/add-members', [ProjectController::class, 'addMembers'])->name('projects.addMembers');
+
+
