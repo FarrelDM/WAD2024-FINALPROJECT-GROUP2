@@ -18,7 +18,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('projects.create') }}">New Project</a></li>
                     <li class="nav-item"><a class="nav-link" href="/calendar">Calendar</a></li>
                     <li class="nav-item"><a class="nav-link" href="/roles">Roles</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/chat">Chat</a></li> <!-- New Chat Button -->
+                    <li class="nav-item"><a class="nav-link" href="/chat">Chat</a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
                 </ul>
             </div>
@@ -43,7 +43,19 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <h5 class="card-title">{{ $project->title }}</h5>
-                            <p class="card-text">Due Date: {{ $project->end_date->format('d/m/Y') }}</p>                           
+                            <p class="card-text">Due Date: {{ $project->end_date->format('d/m/Y') }}</p>
+
+                            <!-- Display Project Members -->
+                            @if($project->members->isNotEmpty())
+                                <p class="mt-3"><strong>Members:</strong></p>
+                                <ul class="list-group mb-3">
+                                    @foreach($project->members as $member)
+                                        <li class="list-group-item">{{ $member->email }}</li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <p class="text-muted mt-3">No members assigned</p>
+                            @endif
 
                             <!-- List the tasks associated with the project -->
                             @if($project->tasks->isNotEmpty())

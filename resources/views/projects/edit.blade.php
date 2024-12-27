@@ -7,82 +7,123 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
-    <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="#">HJ Barakah</a>
+            <a class="navbar-brand" href="/dashboard">HJ Barakah</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
                 </ul>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <main class="container py-5">
-        <h1 class="h3 mb-4">Edit Project</h1>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Edit Project</h1>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form action="{{ route('projects.update', $project->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
 
-        <form action="{{ route('projects.update', $project->id) }}" method="POST">
-            @csrf
-            @method('PUT')
+                    <!-- Project Details -->
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Project Title</label>
+                        <input type="text" name="title" id="title" class="form-control" value="{{ $project->title }}" required>
+                    </div>
 
-            <div class="mb-3">
-                <label for="title" class="form-label">Project Title</label>
-                <input type="text" class="form-control" id="title" name="title" value="{{ old('title', $project->title) }}" required>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <input type="text" name="status" id="status" class="form-control" value="{{ $project->status }}" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="start_date" class="form-label">Start Date</label>
+                            <input type="datetime-local" name="start_date" id="start_date" class="form-control" value="{{ $project->start_date->format('Y-m-d\TH:i') }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="end_date" class="form-label">End Date</label>
+                            <input type="datetime-local" name="end_date" id="end_date" class="form-control" value="{{ $project->end_date->format('Y-m-d\TH:i') }}" required>
+                        </div>
+                    </div>
+
+                    <!-- Members -->
+                    <div class="mb-3">
+                        <label for="members" class="form-label">Project Members</label>
+                        <div id="member-fields">
+                            @foreach ($project->members as $member)
+                                <div class="d-flex mb-2">
+                                    <input type="email" name="members[]" value="{{ $member->email }}" class="form-control me-2" readonly>
+                                    <button type="button" class="btn btn-outline-danger btn-sm remove-member">Remove</button>
+                                </div>
+                            @endforeach
+                        </div>
+                        <button type="button" id="add-member" class="btn btn-outline-secondary btn-sm">+ Add Member</button>
+                    </div>
+
+                    <!-- Tasks -->
+                    <div class="mb-3">
+                        <label for="tasks" class="form-label">Project Tasks</label>
+                        <div id="task-fields">
+                            @foreach ($project->tasks as $task)
+                                <div class="d-flex mb-2">
+                                    <input type="text" name="tasks[{{ $task->id }}]" value="{{ $task->task_name }}" class="form-control me-2" required>
+                                    <button type="button" class="btn btn-outline-danger btn-sm remove-task">Remove</button>
+                                </div>
+                            @endforeach
+                        </div>
+                        <button type="button" id="add-task" class="btn btn-outline-secondary btn-sm">+ Add Task</button>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Update Project</button>
+                        <a href="/dashboard" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
             </div>
+        </div>
+    </div>
 
-            <div class="mb-3">
-                <label for="status" class="form-label">Status</label>
-                <input type="text" class="form-control" id="status" name="status" value="{{ old('status', $project->status) }}" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="end_date" class="form-label">Due Date</label>
-                <input type="date" class="form-control" id="end_date" name="end_date" value="{{ old('end_date', $project->end_date->format('Y-m-d')) }}" required>
-            </div>
-
-            <h4 class="mt-4">Current Tasks</h4>
-            @foreach($project->tasks as $task)
-                <div class="mb-3">
-                    <label for="task_name" class="form-label">Task</label>
-                    <input type="text" class="form-control" name="tasks[{{ $task->id }}][task_name]" value="{{ $task->task_name }}" required>
-                    <input type="hidden" name="tasks[{{ $task->id }}][id]" value="{{ $task->id }}">
-                    <input type="hidden" name="tasks[{{ $task->id }}][status]" value="{{ $task->status }}">
-                </div>
-            @endforeach
-
-            <h4 class="mt-4">Add New Tasks</h4>
-            <div id="new-tasks">
-                <div class="mb-3">
-                    <label for="task_name" class="form-label">New Task</label>
-                    <input type="text" class="form-control" name="tasks[][task_name]" required>
-                    <input type="hidden" name="tasks[][status]" value="pending">
-                </div>
-            </div>
-
-            <button type="button" class="btn btn-secondary" id="add-task">Add Another Task</button>
-
-            <div class="mt-4">
-                <button type="submit" class="btn btn-primary">Update Project</button>
-            </div>
-        </form>
-    </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Add new task input fields dynamically
-        document.getElementById('add-task').addEventListener('click', function() {
-            let newTaskField = document.createElement('div');
-            newTaskField.classList.add('mb-3');
-            newTaskField.innerHTML = `
-                <label for="task_name" class="form-label">New Task</label>
-                <input type="text" class="form-control" name="tasks[][task_name]" required>
-                <input type="hidden" name="tasks[][status]" value="pending">
-            `;
-            document.getElementById('new-tasks').appendChild(newTaskField);
+        // Add dynamic member fields
+        document.getElementById('add-member').addEventListener('click', function () {
+            const memberField = document.createElement('input');
+            memberField.type = 'email';
+            memberField.name = 'members[]';
+            memberField.className = 'form-control mb-2';
+            memberField.placeholder = 'Enter member email';
+            document.getElementById('member-fields').appendChild(memberField);
+        });
+
+        // Add dynamic task fields
+        document.getElementById('add-task').addEventListener('click', function () {
+            const taskField = document.createElement('input');
+            taskField.type = 'text';
+            taskField.name = 'tasks[]';
+            taskField.className = 'form-control mb-2';
+            taskField.placeholder = 'Task Name';
+            document.getElementById('task-fields').appendChild(taskField);
+        });
+
+        // Remove member field
+        document.querySelectorAll('.remove-member').forEach(button => {
+            button.addEventListener('click', function () {
+                this.parentElement.remove();
+            });
+        });
+
+        // Remove task field
+        document.querySelectorAll('.remove-task').forEach(button => {
+            button.addEventListener('click', function () {
+                this.parentElement.remove();
+            });
         });
     </script>
 </body>
