@@ -1,8 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Task Details</h1>
+
+<!-- Updated Navbar -->
+<header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="{{ route('dashboard') }}">HJ Barakah</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/new-project">New Project</a></li>
+                <li class="nav-item"><a class="nav-link" href="/calendar">Calendar</a></li>
+                <li class="nav-item"><a class="nav-link" href="/roles">Roles</a></li>
+                <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<div class="container mt-3">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Task Details</h1>
+        <!-- Cancel Edit Button aligned with Task Details -->
+        <a href="{{ route('dashboard') }}" class="btn btn-danger text-white">Cancel Edit</a>
+    </div>
 
     <!-- Task Information -->
     <div class="card mb-3">
@@ -14,7 +37,7 @@
 
     <!-- Edit Task Form -->
     <h3>Edit Task</h3>
-    <form action="{{ route('tasks.update', $task->id) }}" method="POST">
+    <form action="{{ route('tasks.update', $task->id) }}" method="POST" id="taskForm">
         @csrf
         @method('PUT')
 
@@ -27,9 +50,6 @@
             <label for="task_details" class="form-label">Task Details</label>
             <textarea name="task_details" id="task_details" class="form-control" required>{{ $task->task_details }}</textarea>
         </div>
-
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-        <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
     </form>
 
     <!-- Roles Section -->
@@ -51,11 +71,16 @@
     </form>
 
     <!-- Display Assigned Roles -->
-    <h4 class="mt-4">Assigned Roles</h4>
     <ul>
         @foreach($task->roles as $role)
             <li>{{ $role->name }} (ID: {{ $role->id }})</li>
         @endforeach
     </ul>
+    
+    <!-- Save Changes Button Below "Assign Roles" -->
+    <div class="d-flex justify-content-end mt-3">
+        <button type="submit" form="taskForm" class="btn btn-primary">Save Changes</button>
+    </div>
 </div>
+
 @endsection
