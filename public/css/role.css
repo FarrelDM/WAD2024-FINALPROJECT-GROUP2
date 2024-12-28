@@ -1,0 +1,17 @@
+.navbar-expand-lg {
+    background-color: #2FA7AB !important;
+}
+
+.navbar-brand {
+    color: white;
+    font-weight: bold;
+}
+
+/* Make all navbar links white */
+.navbar-nav .nav-link {
+    color: white !important;
+}
+
+.navbar-nav .logout-link {
+    color: #333131 !important; /* or use any color you prefer, e.g. #666 for grey */
+}

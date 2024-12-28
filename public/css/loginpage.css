@@ -1,0 +1,27 @@
+.bg-light {
+    background-image: linear-gradient(#2FA7AB, white);
+}
+
+.mb-3{
+    color: #2FA7AB;
+}
+
+.text-center{
+    color: #2FA7AB;
+    
+}
+
+.text-decoration-none{
+    color: #2FA7AB;
+}
+
+.btn-primary{
+    background-color: #2FA7AB;
+}
+
+img{
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+}
+

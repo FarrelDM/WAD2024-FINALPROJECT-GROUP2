@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel ="stylesheet" href="{{asset('css/loginpage.css')}}">
+
 </head>
 <body class="bg-light">
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="card shadow-lg p-4">
             <div class="text-center mb-4">
-                <img src="/path-to-logo.png" alt="HJ Barakah Logo" class="mb-3">
+                <img src="{{asset('tempImage5ApUE0 1.png')}}" alt="HJ Barakah Logo" class="mb-3">
                 <h1 class="h4">Register</h1>
             </div>
             <!-- Display Success Message -->

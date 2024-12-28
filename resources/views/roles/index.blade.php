@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roles and Users</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel ="stylesheet" href="{{asset('css/role.css')}}">
 </head>
 <body class="bg-light">
     <!-- Header with Dashboard Link -->
@@ -17,9 +18,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ route('projects.create') }}">New Project</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/calendar">Calendar</a></li>
                     <li class="nav-item"><a class="nav-link" href="/roles">Roles</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/chat">Chat</a></li>
+                    <li class="nav-item"><a class="nav-link logout-link" href="/logout">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -75,10 +76,6 @@
 
         <!-- Button to create a new role -->
         <a href="{{ route('roles.create') }}" class="btn btn-primary">Create New Role</a>
-
-        <!-- Button to go back to Dashboard -->
-        <a href="{{ route('dashboard') }}" class="btn btn-secondary mt-3">Back to Dashboard</a>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

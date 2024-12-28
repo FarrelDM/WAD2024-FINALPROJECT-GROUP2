@@ -1,0 +1,63 @@
+.btn-success {
+    color: #ffffff;
+    background-color: #2FA7AB;
+}
+
+.container {
+    margin: 0;
+}
+
+main {
+    margin:0;
+}
+
+/* taskdetails.css */
+
+/* Navbar Styling */
+.navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm {
+    background-color: #2FA7AB !important;
+    width: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 80px; /* Set the desired height */
+    display: flex; /* Ensure proper alignment of content */
+    align-items: center; /* Vertically center content */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Drop shadow */
+    z-index: 100;
+}
+
+/* Heading Styling */
+h3.mb-4 {
+    color: #2FA7AB;
+}
+
+/* Navbar Brand Styling */
+.navbar-brand {
+    color: white !important;
+    font-weight: bold;
+    font-size: 36px;
+    transition: color 0.3s ease; /* Smooth transition effect */
+}
+.navbar-brand:hover {
+    color: black !important; /* Change text color to black on hover */
+}
+
+/* Make all navbar links white */
+.navbar-nav .nav-link {
+    color: white !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: white !important;
+    text-decoration: underline;
+}
+
+/* Specific Styling for Logout Link */
+.navbar-nav .logout-link {
+    color: #333131 !important; /* or any preferred color, e.g., #666 for grey */
+}
+
+.navbar-nav .logout-link:hover {
+    color: red !important; /* or any preferred color, e.g., #666 for grey */
+}

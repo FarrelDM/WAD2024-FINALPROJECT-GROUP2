@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<link rel ="stylesheet" href="{{asset('css/notification.css')}}">
+
 <div class="container">
     <h1>Create Notification</h1>
     <form action="{{ route('notifications.store') }}" method="POST">

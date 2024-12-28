@@ -1,0 +1,89 @@
+.chat-sidebar {
+    max-height: 100vh;
+    overflow-y: auto;
+}
+.chat-header {
+    border-bottom: 1px solid #ddd;
+}
+.chat-body {
+    height: calc(100vh - 180px);
+    overflow-y: auto;
+}
+.chat-footer {
+    position: relative;
+    bottom: 0;
+}
+.chat-bubble {
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px 0;
+    position: relative;
+    cursor: pointer;
+}
+.chat-bubble-sent {
+    background-color: #d1f7d6;
+    align-self: flex-end;
+}
+.chat-bubble-received {
+    background-color: #f1f1f1;
+    align-self: flex-start;
+}
+.chat-search {
+    margin-bottom: 1rem;
+}
+.context-menu {
+    display: none;
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 5px;
+}
+.context-menu button {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+.context-menu button:hover {
+    background-color: #f8f8f8;
+}
+
+.navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm {
+    background-color: #2FA7AB !important;
+
+    
+}
+h3 mb-4{
+    color: #2FA7AB;
+}
+
+.navbar-brand{
+    color: white;
+    font-weight: bold;
+}
+
+/* Make all navbar links white */
+.navbar-nav .nav-link {
+    color: white !important;
+}
+.navbar-nav .nav-link:hover {
+    color: #0000; /* Change to your preferred hover color */
+    text-decoration: underline; /* Optional underline on hover */
+}
+.navbar-nav .logout-link {
+    color: #333131 !important; /* or use any color you prefer, e.g. #666 for grey */
+}
+
+.navbar-nav .logout-link:hover {
+    color:red !important; /* or use any color you prefer, e.g. #666 for grey */
+}
+
+img{
+    width: 50px;
+    height: 50px;
+}
