@@ -1,0 +1,33 @@
+.navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm {
+    background-color: #2FA7AB !important;
+    height: 80px; /* Set the desired height */
+    display: flex; /* Ensure proper alignment of content */
+    align-items: center; /* Vertically center content */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Drop shadow */
+}
+h3 mb-4{
+    color: #2FA7AB;
+}
+
+.navbar-brand{
+    color: white;
+    font-weight: bold;
+    font-size: 36px;
+}
+
+/* Make all navbar links white */
+.navbar-nav .nav-link {
+    color: white !important;
+}
+.navbar-nav .nav-link:hover {
+    color: white !important;
+    text-decoration: underline;
+}
+
+.navbar-nav .logout-link {
+    color: #333131 !important; /* or use any color you prefer, e.g. #666 for grey */
+}
+
+.navbar-nav .logout-link:hover {
+    color: red !important; /* or use any color you prefer, e.g. #666 for grey */
+}

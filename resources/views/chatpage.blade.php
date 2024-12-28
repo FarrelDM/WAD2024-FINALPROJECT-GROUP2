@@ -5,62 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .chat-sidebar {
-            max-height: 100vh;
-            overflow-y: auto;
-        }
-        .chat-header {
-            border-bottom: 1px solid #ddd;
-        }
-        .chat-body {
-            height: calc(100vh - 180px);
-            overflow-y: auto;
-        }
-        .chat-footer {
-            position: relative;
-            bottom: 0;
-        }
-        .chat-bubble {
-            max-width: 70%;
-            padding: 10px;
-            border-radius: 10px;
-            margin: 5px 0;
-            position: relative;
-            cursor: pointer;
-        }
-        .chat-bubble-sent {
-            background-color: #d1f7d6;
-            align-self: flex-end;
-        }
-        .chat-bubble-received {
-            background-color: #f1f1f1;
-            align-self: flex-start;
-        }
-        .chat-search {
-            margin-bottom: 1rem;
-        }
-        .context-menu {
-            display: none;
-            position: absolute;
-            background: #fff;
-            border: 1px solid #ddd;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            border-radius: 5px;
-        }
-        .context-menu button {
-            width: 100%;
-            text-align: left;
-            padding: 10px;
-            border: none;
-            background: none;
-            cursor: pointer;
-        }
-        .context-menu button:hover {
-            background-color: #f8f8f8;
-        }
-    </style>
+    <link rel ="stylesheet" href="{{asset('css/chat.css')}}">
+
 </head>
 <body class="bg-light">
     <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
@@ -73,9 +19,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="/new-project">New Project</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/calendar">Calendar</a></li>
                     <li class="nav-item"><a class="nav-link" href="/roles">Roles</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/chat">Chat</a></li>
+                    <li class="nav-item"><a class="nav-link logout-link" href="/logout">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -90,7 +36,7 @@
                 <ul class="list-group list-group-flush">
                     @foreach($users as $user)
                         <li class="list-group-item d-flex align-items-center">
-                            <img src="https://via.placeholder.com/40" alt="User" class="rounded-circle me-2">
+                            <img src="{{asset('user-2.png')}}" alt="User" class="rounded-circle me-2">
                             <a href="{{ url('/chat?user=' . $user->id) }}" class="text-decoration-none flex-grow-1">
                                 <span>{{ $user->name }}</span>
                             </a>
@@ -103,7 +49,7 @@
             <div class="col-md-9 d-flex flex-column">
                 <!-- Chat Header -->
                 <div class="chat-header bg-white p-3 d-flex align-items-center">
-                    <img src="https://via.placeholder.com/40" alt="Selected User" class="rounded-circle me-3">
+                    <img src="{{asset('user-2.png')}}" alt="Selected User" class="rounded-circle me-3">
                     <h5 class="mb-0">{{ $selectedUser->name ?? 'Select a User' }}</h5>
                 </div>
 

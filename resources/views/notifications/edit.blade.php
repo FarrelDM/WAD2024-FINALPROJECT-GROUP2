@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+
+<link rel ="stylesheet" href="{{asset('css/notification.css')}}">
+
 <div class="container">
     <h1>Edit Notification</h1>
     
@@ -26,7 +29,8 @@
             <label for="roles" class="form-label">Roles (Optional)</label>
             <select name="roles[]" id="roles" class="form-control" multiple>
                 @foreach ($roles as $role)
-                    <option value="{{ $role->id }}" {{ in_array($role->id, $notification->roles ?? []) ? 'selected' : '' }}>
+                    <option value="{{ $role->id }}" 
+                        {{ $notification->roles->contains($role->id) ? 'selected' : '' }}>
                         {{ $role->name }}
                     </option>
                 @endforeach
@@ -57,7 +61,7 @@
         <button type="submit" class="btn btn-danger mt-3" onclick="return confirm('Are you sure you want to delete this notification?')">
             Delete Notification
         </button>
-</form>
+    </form>
 
 </div>
 @endsection
