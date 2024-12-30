@@ -20,7 +20,11 @@
 
             <div class="mb-3">
                 <label for="status" class="form-label">Status</label>
-                <input type="text" name="status" class="form-control" required>
+                <select name="status" id="status" class="form-control" required>
+                    <option value="Not Completed">Not Completed</option>
+                    <option value="On-going">On-going</option>
+                    <option value="Completed">Completed</option>
+                </select>
             </div>
 
             <div class="mb-3">

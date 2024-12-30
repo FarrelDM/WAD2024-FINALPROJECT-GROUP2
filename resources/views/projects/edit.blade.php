@@ -9,22 +9,6 @@
 
 </head>
 <body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="/dashboard">HJ Barakah</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/dashboard">Dashboard</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
     <div class="container mt-5">
         <h1 class="text-center mb-4">Edit Project</h1>
         <div class="card shadow-sm">
@@ -41,7 +25,11 @@
 
                     <div class="mb-3">
                         <label for="status" class="form-label">Status</label>
-                        <input type="text" name="status" id="status" class="form-control" value="{{ $project->status }}" required>
+                        <select name="status" id="status" class="form-control" required>
+                            <option value="Not Completed" {{ $project->status == 'Not Completed' ? 'selected' : '' }}>Not Completed</option>
+                            <option value="On-going" {{ $project->status == 'On-going' ? 'selected' : '' }}>On-going</option>
+                            <option value="Completed" {{ $project->status == 'Completed' ? 'selected' : '' }}>Completed</option>
+                        </select>
                     </div>
 
                     <div class="row">
