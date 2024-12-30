@@ -35,7 +35,7 @@ class ProjectController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'status' => 'required|string|max:255',
+            'status' => 'required|in:Not Completed,On-going,Completed',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
             'tasks' => 'required|array',
@@ -89,7 +89,7 @@ class ProjectController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'status' => 'required|string|max:255',
+            'status' => 'required|in:Not Completed,On-going,Completed',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
             'tasks' => 'nullable|array',
@@ -98,23 +98,25 @@ class ProjectController extends Controller
             'members' => 'nullable|array',
             'members.*' => 'nullable|email|exists:users,email',
         ]);
-
+    
         $project = Project::findOrFail($id);
-
+    
         // Ensure the logged-in user is the owner or a member of the project
         if ($project->user_id != Auth::id() && !$project->members->contains(Auth::id())) {
             return redirect()->route('projects.index')->with('error', 'You are not authorized to update this project.');
         }
-
+    
         $project->update([
             'title' => $request->title,
             'status' => $request->status,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
         ]);
-
+    
         // Update tasks
         if ($request->tasks) {
+            $existingTaskIds = [];
+            
             foreach ($request->tasks as $taskData) {
                 if (is_array($taskData) && isset($taskData['id'])) {
                     // Update existing task
@@ -122,27 +124,36 @@ class ProjectController extends Controller
                     $task->update([
                         'task_name' => $taskData['task_name'],
                     ]);
+                    $existingTaskIds[] = $task->id;
                 } elseif (is_string($taskData)) {
                     // Add new task if $taskData is a string
-                    Task::create([
+                    $newTask = Task::create([
                         'task_name' => $taskData,
                         'project_id' => $project->id,
-                        'task_details' => $taskData,
+                        'task_details' => 'No details provided',
                     ]);
+                    $existingTaskIds[] = $newTask->id;
                 }
             }
+    
+            // Delete tasks that are not included in the update
+            Task::where('project_id', $project->id)
+                ->whereNotIn('id', $existingTaskIds)
+                ->delete();
+        } else {
+            // If no tasks are provided, delete all tasks
+            Task::where('project_id', $project->id)->delete();
         }
-        
-                
-
+    
         // Update members
         if ($request->members) {
             $members = User::whereIn('email', $request->members)->pluck('id');
             $project->members()->sync($members);
         }
-
+    
         return redirect()->route('projects.index')->with('success', 'Project updated successfully!');
     }
+    
 
     // Delete the project
     public function destroy($id)

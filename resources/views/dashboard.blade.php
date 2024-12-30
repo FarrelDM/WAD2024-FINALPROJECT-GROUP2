@@ -6,7 +6,6 @@
     <title>Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel ="stylesheet" href="{{asset('css/dashboard.css')}}">
-
 </head>
 <body class="bg-light">
     <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
@@ -46,6 +45,23 @@
                             <h5 class="card-title">{{ $project->title }}</h5>
                             <p class="card-text">Due Date: {{ $project->end_date->format('d/m/Y') }}</p>
 
+                            <!-- Progress Bar -->
+                            <div class="progress mb-3">
+                                <div 
+                                    class="progress-bar 
+                                    @if($project->status == 'Not Completed') bg-danger 
+                                    @elseif($project->status == 'On-going') bg-warning 
+                                    @elseif($project->status == 'Completed') bg-success 
+                                    @endif" 
+                                    role="progressbar" 
+                                    style="width: 100%" 
+                                    aria-valuenow="100" 
+                                    aria-valuemin="0" 
+                                    aria-valuemax="100">
+                                    {{ $project->status }}
+                                </div>
+                            </div>
+
                             <!-- Display Project Members -->
                             @if($project->members->isNotEmpty())
                                 <p class="mt-3"><strong>Members:</strong></p>
@@ -84,7 +100,7 @@
                             @endif
 
                             <!-- Edit Project Button -->
-                            <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-primary mt-3">+</a>
+                            <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-primary mt-3">Edit</a>
 
                             <!-- Delete Project Button -->
                             <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display:inline;">
