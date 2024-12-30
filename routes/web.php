@@ -21,6 +21,7 @@ Route::get('/chat', [ChatController::class, 'index'])->middleware('auth');
 Route::post('/chat/send', [ChatController::class, 'sendMessage'])->middleware('auth');
 Route::post('/chat/{id}/update', [ChatController::class, 'updateMessage'])->middleware('auth');
 Route::delete('/chat/{id}/delete', [ChatController::class, 'deleteChat'])->middleware('auth');
+Route::get('/chat/export', [ChatController::class, 'exportChatLog'])->middleware('auth')->name('chat.export');
 
 
 Route::middleware('auth')->group(function () {

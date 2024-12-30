@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel ="stylesheet" href="{{asset('css/chat.css')}}">
-
+    <link rel="stylesheet" href="{{ asset('css/chat.css') }}">
 </head>
 <body class="bg-light">
     <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
-            <!-- Updated href to redirect to the dashboard -->
             <a class="navbar-brand" href="{{ route('dashboard') }}">HJ Barakah</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -36,7 +34,7 @@
                 <ul class="list-group list-group-flush">
                     @foreach($users as $user)
                         <li class="list-group-item d-flex align-items-center">
-                            <img src="{{asset('user-2.png')}}" alt="User" class="rounded-circle me-2">
+                            <img src="{{ asset('user-2.png') }}" alt="User" class="rounded-circle me-2">
                             <a href="{{ url('/chat?user=' . $user->id) }}" class="text-decoration-none flex-grow-1">
                                 <span>{{ $user->name }}</span>
                             </a>
@@ -48,9 +46,17 @@
             <!-- Chat Section -->
             <div class="col-md-9 d-flex flex-column">
                 <!-- Chat Header -->
-                <div class="chat-header bg-white p-3 d-flex align-items-center">
-                    <img src="{{asset('user-2.png')}}" alt="Selected User" class="rounded-circle me-3">
-                    <h5 class="mb-0">{{ $selectedUser->name ?? 'Select a User' }}</h5>
+                <div class="chat-header bg-white p-3 d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <img src="{{ asset('user-2.png') }}" alt="Selected User" class="rounded-circle me-3">
+                        <h5 class="mb-0">{{ $selectedUser->name ?? 'Select a User' }}</h5>
+                    </div>
+                    @if($selectedUser)
+                        <form action="{{ route('chat.export') }}" method="GET">
+                            <input type="hidden" name="user" value="{{ $selectedUser->id }}">
+                            <button class="btn btn-success btn-sm">Export Chat Log</button>
+                        </form>
+                    @endif
                 </div>
 
                 <!-- Chat Body -->
