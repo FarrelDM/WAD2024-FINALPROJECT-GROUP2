@@ -10,12 +10,14 @@ use App\Http\Controllers\NotificationController;
 Route::get('/', [App\Http\Controllers\UserController::class, 'showLoginPage'])->name('login');
 Route::post('/login', [App\Http\Controllers\UserController::class, 'login']);
 Route::get('/logout', [App\Http\Controllers\UserController::class, 'logout']);
+
 Route::get('/register', [App\Http\Controllers\UserController::class, 'showRegisterPage'])->name('register');
 Route::post('/register', [App\Http\Controllers\UserController::class, 'register']);
-Route::get('/dashboard', [App\Http\Controllers\UserController::class, 'showDashboard'])->middleware('auth');
+
 Route::get('/forgot-password', [App\Http\Controllers\UserController::class, 'showForgotPasswordPage'])->name('password.request');
-Route::post('/forgot-password', [App\Http\Controllers\UserController::class, 'sendResetLink'])->name('password.email');
-Route::post('/reset-password', [App\Http\Controllers\UserController::class, 'resetPassword'])->name('password.update');
+Route::post('/reset-password-direct', [UserController::class, 'resetPasswordDirect'])->name('password.direct');
+
+Route::get('/dashboard', [App\Http\Controllers\UserController::class, 'showDashboard'])->middleware('auth');
 
 Route::get('/chat', [ChatController::class, 'index'])->middleware('auth');
 Route::post('/chat/send', [ChatController::class, 'sendMessage'])->middleware('auth');
