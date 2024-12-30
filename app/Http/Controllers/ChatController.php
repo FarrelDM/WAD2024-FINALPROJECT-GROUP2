@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Chat;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ChatExport;
 
 class ChatController extends Controller
 {
@@ -84,5 +86,22 @@ class ChatController extends Controller
     {
         // Additional functionality if needed for removing a user
         return redirect()->back();
+    }
+
+    public function exportChatLog(Request $request)
+    {
+        $selectedUserId = $request->query('user');
+
+        if (!$selectedUserId) {
+            return redirect()->back()->with('error', 'Please select a user to export chat logs.');
+        }
+
+        $selectedUser = User::find($selectedUserId);
+
+        if (!$selectedUser) {
+            return redirect()->back()->with('error', 'User not found.');
+        }
+
+        return Excel::download(new ChatExport(Auth::id(), $selectedUserId), 'chat-log.xlsx');
     }
 }
