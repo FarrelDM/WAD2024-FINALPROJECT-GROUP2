@@ -8,6 +8,7 @@
 </head>
 <body class="bg-light">
     <!-- Header with Dashboard Link -->
+    <!--
     <header class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="{{ route('dashboard') }}">HJ Barakah</a>
@@ -24,6 +25,7 @@
             </div>
         </div>
     </header>
+    -->
 
     <div class="container mt-5">
         <h1>Assign Users to Role: {{ $role->name }}</h1>

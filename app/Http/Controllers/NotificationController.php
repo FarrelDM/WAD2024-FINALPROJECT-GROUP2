@@ -14,7 +14,8 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        $notifications = Notification::with('task')->get(); // Include associated tasks
+        // Eager load roles and tasks for each notification
+        $notifications = Notification::with(['roles', 'task'])->get();
         return response()->json($notifications);
     }
 
@@ -41,15 +42,17 @@ class NotificationController extends Controller
             'task_id' => 'nullable|integer|exists:tasks,id', // Ensure task exists
         ]);
 
-        $task = $request->task_id ? Task::find($request->task_id) : null;
-
+        // Create the notification
         $notification = Notification::create([
             'title' => $validated['title'],
             'message' => $validated['message'],
-            'roles' => $validated['roles'] ?? [],
             'task_id' => $validated['task_id'],
-            'reminder_time' => $task ? $task->date : now(), // Use task's date if available
         ]);
+
+        // Sync roles if provided
+        if (!empty($validated['roles'])) {
+            $notification->roles()->sync($validated['roles']);
+        }
 
         return redirect()->route('dashboard')->with('success', 'Notification created successfully');
     }
@@ -77,24 +80,29 @@ class NotificationController extends Controller
             'task_id' => 'nullable|integer|exists:tasks,id',
         ]);
 
-        $task = $request->task_id ? Task::find($request->task_id) : null;
-
+        // Update the notification
         $notification->update([
             'title' => $validated['title'],
             'message' => $validated['message'],
-            'roles' => $validated['roles'] ?? [],
             'task_id' => $validated['task_id'],
-            'reminder_time' => $task ? $task->date : now(), // Update reminder time if task changes
         ]);
+
+        // Sync roles if provided
+        if (!empty($validated['roles'])) {
+            $notification->roles()->sync($validated['roles']);
+        }
 
         return redirect()->route('dashboard')->with('success', 'Notification updated successfully');
     }
+
+    /**
+     * Remove the specified notification from the database.
+     */
     public function destroy(Notification $notification)
-{
-    $notification->delete();
+    {
+        $notification->roles()->detach(); // Detach roles
+        $notification->delete(); // Delete the notification
 
-    return redirect()->route('dashboard')->with('success', 'Notification deleted successfully.');
-}
-
-
+        return redirect()->route('dashboard')->with('success', 'Notification deleted successfully.');
+    }
 }

@@ -1,7 +1,5 @@
 body {
-    /* Example: a simple left-to-right gradient from teal (#2FA7AB) to a lighter green (#a8e6cf) */
     background: linear-gradient(to right, #2FA7AB, #a8e6cf);
-    /* Ensure the gradient spans the full viewport height */
     min-height: 100vh;
     margin: 0;
     padding: 0;
