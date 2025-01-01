@@ -1,9 +1,9 @@
 .navbar.navbar-expand-lg.navbar-light.bg-white.shadow-sm {
     background-color: #2FA7AB !important;
-    height: 80px; /* Set the desired height */
-    display: flex; /* Ensure proper alignment of content */
-    align-items: center; /* Vertically center content */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Drop shadow */
+    height: 80px; 
+    display: flex; 
+    align-items: center; 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
 }
 h3 mb-4{
     color: #2FA7AB;
@@ -15,7 +15,7 @@ h3 mb-4{
     font-size: 36px;
 }
 
-/* Make all navbar links white */
+
 .navbar-nav .nav-link {
     color: white !important;
 }
@@ -25,9 +25,9 @@ h3 mb-4{
 }
 
 .navbar-nav .logout-link {
-    color: #333131 !important; /* or use any color you prefer, e.g. #666 for grey */
+    color: #333131 !important; 
 }
 
 .navbar-nav .logout-link:hover {
-    color: red !important; /* or use any color you prefer, e.g. #666 for grey */
+    color: red !important; 
 }

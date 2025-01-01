@@ -79,7 +79,7 @@
                                 <ul class="list-group mt-3">
                                     @foreach($project->tasks as $task)
                                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                                            <strong>{{ $task->task_name }}</strong> - {{ $task->status }}
+                                            <strong>{{ $task->task_name }}</strong>
 
                                             <!-- Task Details Button -->
                                             <a href="{{ route('tasks.show', $task->id) }}" class="btn btn-sm btn-info">
@@ -133,6 +133,12 @@
                                 <div class="card-body">
                                     <h5 class="card-title">${notification.title}</h5>
                                     <p class="card-text">${notification.message}</p>
+                                    <p><strong>Roles:</strong> 
+                                        ${notification.roles.map(role => `<span class='badge bg-secondary'>${role.name}</span>`).join(' ')}
+                                    </p>
+                                    <p><strong>Task:</strong> 
+                                        ${notification.task ? `${notification.task.task_name}` : '<span class="text-muted">No task assigned</span>'}
+                                    </p>
                                     <a href="/notifications/${notification.id}/edit" class="btn btn-primary btn-sm">Edit</a>
                                 </div>
                             `;
